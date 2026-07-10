@@ -1,0 +1,35 @@
+name: Change ArgoCD Service
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_PIPELINE1 }}
+
+      - name: Connect to AKS cluster
+        run: |
+          az aks get-credentials \
+            --resource-group myResourceGroup-new \
+            --name azuredevops \
+            --overwrite-existing
+
+      - name: Change argocd from ClusterIP to LoadBalancer
+        run: |
+          kubectl patch svc argocd-server -n argocd \
+            -p '{"spec":{"type":"LoadBalancer"}}'
+
+      - name: Verify
+        run: |
+          kubectl get svc argocd-server -n argocd
