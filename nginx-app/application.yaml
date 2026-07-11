@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: https://github.com/Indranil010/sample-app.git
     targetRevision: HEAD
-    path: nginx-app
+    path: nginx-app/chart1
 
   destination:
     server: https://kubernetes.default.svc
