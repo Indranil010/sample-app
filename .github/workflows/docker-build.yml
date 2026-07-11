@@ -25,11 +25,8 @@ jobs:
             --name azuredevops \
             --overwrite-existing
 
-      - name: Change argocd from ClusterIP to LoadBalancer
-        run: |
-          kubectl patch svc argocd-server -n argocd \
-            -p '{"spec":{"type":"LoadBalancer"}}'
-
-      - name: Verify
-        run: |
-          kubectl get svc argocd-server -n argocd
+      - name: Install helm chart
+        uses: KazW/helm-github-action@v0.1.0
+        with:
+          command: install
+          args: /nginx-app/chart1
