@@ -29,4 +29,4 @@ jobs:
         uses: azure/setup-helm@v4
       - name: run helm install command
         run: |
-          helm install /nginx-app/chart1
+          helm install demo /nginx-app/chart1
